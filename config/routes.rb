@@ -10,5 +10,11 @@ Rails.application.routes.draw do
     patch "/students/:id" => "students#update"
 
     post "/sessions" => "sessions#create"
+
+    get "/experiences" => "experiences#index"
+    get "/experiences/:id" => "experiences#show"
+    post "experiences" => "experiences#create"
+    patch "experiences" => "experiences#update"
+    delete "experiences/:id" => "experiences#destroy"
   end
 end
