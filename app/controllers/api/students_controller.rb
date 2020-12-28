@@ -1,6 +1,13 @@
 class Api::StudentsController < ApplicationController
+  before_action :authenticate_user, except: { :create, :update, :destroy}
+
+  def index
+    @students = Student.all 
+    render json: 'index.json.jb'
+  end
+  
   def create
-    student = Student.new(
+    @student = Student.new(
       first_name: params[:first_name]
       last_name: params[:last_name],
       email: params[:email],
@@ -19,10 +26,10 @@ class Api::StudentsController < ApplicationController
       photo_url: params
       [:photo_url]
     )
-    if student.save
-      render json: { message: "student created successfully" }, status: :created
+    if @student.save
+      render json: 'show.json.jb'
     else
-      render json: { errors: student.errors.full_messages }, status: :bad_request
+      render json: { errors: @student.errors.full_messages }, status: :bad_request
     end
   end
 end
