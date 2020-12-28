@@ -8,5 +8,7 @@ Rails.application.routes.draw do
     post "/students" => "students#create"
     get "/students/:id" => "students#show"
     patch "/students/:id" => "students#update"
+
+    post "/sessions" => "sessions#create"
   end
 end
