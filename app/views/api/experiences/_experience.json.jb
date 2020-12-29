@@ -1,0 +1,9 @@
+{
+  id: experience.id,
+  student_id: experience.student_id,
+  start_date: experience.start_date,
+  end_date: experience.end_date,
+  job_title: experience.job_title,
+  company_name: experience.company_name,
+  details: experience.details,
+}

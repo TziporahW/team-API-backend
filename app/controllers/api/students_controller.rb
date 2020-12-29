@@ -2,10 +2,10 @@ class Api::StudentsController < ApplicationController
   before_action :authenticate_student, except: [:create, :index, :show]
 
   def index
-    @students = Student.all 
-    render 'index.json.jb'
+    @students = Student.all
+    render "index.json.jb"
   end
-  
+
   # def create
   #   @student = Student.new({
   #     first_name: params[:first_name],
@@ -31,7 +31,7 @@ class Api::StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
-    render 'show.json.jb'
+    render "show.json.jb"
   end
 
   def update
@@ -50,12 +50,12 @@ class Api::StudentsController < ApplicationController
       @student.photo_url = params[:photo_url] || @student.photo_url
 
       if @student.save
-        render 'show.json.jb'
-      else 
+        render "show.json.jb"
+      else
         render json: { errors: @student.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: {message: 'This is not your profile.'}, status: :unauthorized
+      render json: { message: "This is not your profile." }, status: :unauthorized
     end
   end
 
@@ -63,9 +63,9 @@ class Api::StudentsController < ApplicationController
     @student = Student.find(params[:id])
     if @student.id == current_student.id
       @student.destroy
-      render json: {message: "Student successfully deleted!"}
+      render json: { message: "Student successfully deleted!" }
     else
-      render json: {message: 'This is not your profile.'}, status: :unauthorized
+      render json: { message: "This is not your profile." }, status: :unauthorized
     end
   end
 end
