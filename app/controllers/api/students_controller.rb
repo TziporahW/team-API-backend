@@ -1,37 +1,37 @@
 class Api::StudentsController < ApplicationController
-  before_action :authenticate_user, except: [:create, :update, :destroy]
+  before_action :authenticate_student, except: [:create, :index, :show]
 
   def index
-    @students = Student.all 
-    render 'index.json.jb'
+    @students = Student.all
+    render "index.json.jb"
   end
-  
-  def create
-    @student = Student.new({
-      first_name: params[:first_name],
-      last_name: params[:last_name],
-      email: params[:email],
-      password: params[:password],
-      password_confirmation: params[:password_confirmation],
-      phone_number: params[:phone_number],
-      short_bio: params[:short_bio],
-      linkedin_url: params[:linkedin_url],
-      twitter_handle: params[:twitter_handle],
-      personal_website_url: params[:personal_website_url],
-      online_resume_url: params[:online_resume_url],
-      github_url: params[:github_url],
-      photo_url: params[:photo_url]
-    })
-    if @student.save
-      render 'show.json.jb'
-    else
-      render json: { errors: @student.errors.full_messages }, status: :bad_request
-    end
-  end
+
+  # def create
+  #   @student = Student.new({
+  #     first_name: params[:first_name],
+  #     last_name: params[:last_name],
+  #     email: params[:email],
+  #     password: params[:password],
+  #     password_confirmation: params[:password_confirmation],
+  #     phone_number: params[:phone_number],
+  #     short_bio: params[:short_bio],
+  #     linkedin_url: params[:linkedin_url],
+  #     twitter_handle: params[:twitter_handle],
+  #     personal_website_url: params[:personal_website_url],
+  #     online_resume_url: params[:online_resume_url],
+  #     github_url: params[:github_url],
+  #     photo_url: params[:photo_url]
+  #   })
+  #   if @student.save
+  #     render 'show.json.jb'
+  #   else
+  #     render json: { errors: @student.errors.full_messages }, status: :bad_request
+  #   end
+  # end
 
   def show
     @student = Student.find(params[:id])
-    render 'show.json.jb'
+    render "show.json.jb"
   end
 
   def update
@@ -50,12 +50,12 @@ class Api::StudentsController < ApplicationController
       @student.photo_url = params[:photo_url] || @student.photo_url
 
       if @student.save
-        render 'show.json.jb'
-      else 
+        render "show.json.jb"
+      else
         render json: { errors: @student.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: {'You are unauthorized.'}, status: :unauthorized
+      render json: { message: "This is not your profile." }, status: :unauthorized
     end
   end
 
@@ -63,9 +63,9 @@ class Api::StudentsController < ApplicationController
     @student = Student.find(params[:id])
     if @student.id == current_student.id
       @student.destroy
-      render json: {message: "Student successfully deleted!"}
+      render json: { message: "Student successfully deleted!" }
     else
-      render json: {'You are unauthorized.'}, status: :unauthorized
+      render json: { message: "This is not your profile." }, status: :unauthorized
     end
   end
 end

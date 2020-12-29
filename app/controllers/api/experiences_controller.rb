@@ -1,4 +1,6 @@
 class Api::ExperiencesController < ApplicationController
+  before_action :authenticate_student, except: [:index, :show]
+
   def index
     @experiences = Experience.where(student_id: params[:student_id])
     render "index.json.jb"
