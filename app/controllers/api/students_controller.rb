@@ -5,7 +5,7 @@ class Api::StudentsController < ApplicationController
     @students = Student.all
     render "index.json.jb"
   end
-  
+
   # def create
   #   @student = Student.new({
   #     first_name: params[:first_name],
@@ -55,9 +55,7 @@ class Api::StudentsController < ApplicationController
         render json: { errors: @student.errors.full_messages }, status: :unprocessable_entity
       end
     else
-
-      render json: {message: 'This is not your profile.'}, status: :unauthorized
-
+      render json: { message: "This is not your profile." }, status: :unauthorized
     end
   end
 
@@ -67,9 +65,7 @@ class Api::StudentsController < ApplicationController
       @student.destroy
       render json: { message: "Student successfully deleted!" }
     else
-
-      render json: {message: 'This is not your profile.'}, status: :unauthorized
-
+      render json: { message: "This is not your profile." }, status: :unauthorized
     end
   end
 end
