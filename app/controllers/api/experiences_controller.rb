@@ -27,24 +27,30 @@ class Api::ExperiencesController < ApplicationController
 
   def update
     @experience = Experience.find_by(id: params[:id])
+    if @experience.student_id == current_student.id
+      @experience.start_date = params[:start_date] || @experience.start_date
+      @experience.end_date = params[:end_date] || @experience.end_date
+      @experience.job_title = params[:job_title] || @experience.job_title
+      @experience.company_name = params[:company_name] || @experience.company_name
+      @experience.details = params[:details] || @experience.details
 
-    @experience.student_id = params[:student_id] || @experience.student_id
-    @experience.start_date = params[:start_date] || @experience.start_date
-    @experience.end_date = params[:end_date] || @experience.end_date
-    @experience.job_title = params[:job_title] || @experience.job_title
-    @experience.company_name = params[:company_name] || @experience.company_name
-    @experience.details = params[:details] || @experience.details
-
-    if @experience.save
-      render "show.json.jb"
+      if @experience.save
+        render "show.json.jb"
+      else
+        render json: { errors: @experience.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render json: { errors: @experience.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: "Not your experience to update!" }, status: :unauthorized
     end
   end
 
   def destroy
     experience = Experience.find_by(id: params[:id])
-    experience.destroy
-    render json: { message: "Successfully Destroyed Experience" }
+    if experience.student_id == current_student.id
+      experience.destroy
+      render json: { message: "Successfully Destroyed Experience" }
+    else
+      render json: { error: "Not your experience to destroy!" }, status: :unauthorized
+    end
   end
 end

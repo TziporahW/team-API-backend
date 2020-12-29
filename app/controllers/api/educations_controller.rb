@@ -11,7 +11,7 @@ class Api::EducationsController < ApplicationController
 
   def create
     @education = Education.new(
-      student_id: params[:student_id],
+      student_id: current_student.id,
       start_date: params[:start_date],
       end_date: params[:end_date],
       degree: params[:degree],
@@ -27,24 +27,30 @@ class Api::EducationsController < ApplicationController
 
   def update
     @education = Education.find_by(id: params[:id])
+    if @education.student_id == current_student.id
+      @education.start_date = params[:start_date] || @education.start_date
+      @education.end_date = params[:end_date] || @education.end_date
+      @education.degree = params[:degree] || @education.degree
+      @education.university_name = params[:university_name] || @education.university_name
+      @education.details = params[:details] || @education.details
 
-    @education.student_id = params[:student_id] || @education.student_id
-    @education.start_date = params[:start_date] || @education.start_date
-    @education.end_date = params[:end_date] || @education.end_date
-    @education.degree = params[:degree] || @education.degree
-    @education.university_name = params[:university_name] || @education.university_name
-    @education.details = params[:details] || @education.details
-
-    if @education.save
-      render "show.json.jb"
+      if @education.save
+        render "show.json.jb"
+      else
+        render json: { errors: @education.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render json: { errors: @education.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: "Not your education to update!" }, status: :unauthorized
     end
   end
 
   def destroy
     education = Education.find_by(id: params[:id])
-    education.destroy
-    render json: { message: "Successfully Destroyed Education" }
+    if education.student_id == current_student.id
+      education.destroy
+      render json: { message: "Successfully Destroyed Education" }
+    else
+      render json: { error: "Not your education to delete!" }, status: :unauthorized
+    end
   end
 end
