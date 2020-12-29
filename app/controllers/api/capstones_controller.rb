@@ -14,7 +14,7 @@ class Api::CapstonesController < ApplicationController
       screenshot_url: params[:screenshot_url]
     )
     if @capstone.save
-    render "show.json.jb"
+      render "show.json.jb"
     else
       render json: { errors: @capstone.errors.full_messages }, status: :bad_request
     end
