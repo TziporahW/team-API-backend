@@ -12,10 +12,10 @@ class Api::SkillsController < ApplicationController
     )
     if @skill.save
       render "show.json.jb"
-      else
-        render json: { errors: @skill.errors.full_messages }, status: :bad_request
-      end
-    render "show.json.jb"
+    else
+      render json: { errors: @skill.errors.full_messages }, status: :bad_request
+    end
+
   end
 
   def show
