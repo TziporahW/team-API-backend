@@ -1,27 +1,44 @@
 class Api::CapstonesController < ApplicationController
+  # before_action :authenticate_user, except: [:index, :show]
   def index
     @capstones = Capstone.all
     render "index.json.jb"
   end
 
-  def show
-    
-    # render ".json.jb"
+  def create
+    @capstone = Capstone.new(
+      student_id: params[:student_id],
+      name: params[:name],
+      description: params[:description],
+      url: params[:url],
+      screenshot_url: params[:screenshot_url]
+    )
+    if @capstone.save
+    render "show.json.jb"
+    else
+      render json: { errors: @capstone.errors.full_messages }, status: :bad_request
+    end
   end
 
-  def create
-    
-    # render ".json.jb"
+  def show
+    @capstone = Capstone.find_by(id: params[:id])
+    render "show.json.jb"
   end
 
   def update
-    
-    # render ".json.jb"
+    @capstone = Capstone.find_by(id: params[:id])
+    @capstone.student_id = params[:student_id] || @capstone.student_id
+    @capstone.name = params[:name] || @capstone.name
+    @capstone.description = params[:description] || @capstone.description
+    @capstone.url = params[:url] || @capstone.url
+    @capstone.screenshot_url = params[:screenshot_url] || @capstone.screenshot_url
+    render "show.json.jb"
   end
   
   def destroy
-    
-    # render ".json.jb"
+    capstone = Capstone.find_by(id: params[:id])
+    capstone.destroy
+    render json: {message: "Photo successfully destroyed."}
   end
 
 end

@@ -1,0 +1,1 @@
+render partial: 'captstone.json.jb', locals: { captstone: @captstone }

@@ -3,7 +3,7 @@ class Api::StudentsController < ApplicationController
 
   def index
     @students = Student.all 
-    render json: 'index.json.jb'
+    render 'index.json.jb'
   end
   
   def create
@@ -27,7 +27,7 @@ class Api::StudentsController < ApplicationController
       [:photo_url]
     )
     if @student.save
-      render json: 'show.json.jb'
+      render 'show.json.jb'
     else
       render json: { errors: @student.errors.full_messages }, status: :bad_request
     end

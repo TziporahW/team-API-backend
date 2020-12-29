@@ -1,0 +1,6 @@
+{
+  student_id: skill.student_id,
+  skill_name: skill.name
+}
+
+
