@@ -7,7 +7,7 @@ class Api::CapstonesController < ApplicationController
 
   def create
     @capstone = Capstone.new(
-      student_id: params[:current_student_id],
+      student_id: current_student.id,
       name: params[:name],
       description: params[:description],
       url: params[:url],
@@ -37,7 +37,7 @@ class Api::CapstonesController < ApplicationController
   def destroy
     capstone = Capstone.find_by(id: params[:id])
     capstone.destroy
-    render json: {message: "Photo successfully destroyed."}
+    render json: {message: "Capstone successfully destroyed."}
   end
 
 end

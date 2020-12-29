@@ -1,5 +1,5 @@
 {
-  current_student_id: capstone.current_student_id,
+  student_id: capstone.student.id,
   name:	capstone.name,
   description: capstone.description,
   url: capstone.url,

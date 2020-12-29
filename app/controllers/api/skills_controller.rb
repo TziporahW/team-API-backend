@@ -7,8 +7,8 @@ class Api::SkillsController < ApplicationController
 
   def create
     @skill = Skill.new(
-      current_student_id: params[:current_student_id],
-      name: params[:name],
+      student_id: current_student.id,
+      skill_name: params[:skill_name],
     )
     if @skill.save
       render "show.json.jb"
@@ -22,18 +22,18 @@ class Api::SkillsController < ApplicationController
     @skill = skill.find_by(id: params[:id])
     render "show.json.jb"
   end
-
+  
   def update
     @skill = skill.find_by(id: params[:id])
     @skill.current_student_id = params[:current_student_id] || @skill.current_student_id
-    @skill.name = params[:name] || @skill.name
+    @skill.skill_name = params[:skill_name] || @skill.skill_name
     render "show.json.jb"
   end
   
   def destroy
     skill = Skill.find_by(id: params[:id])
     skill.destroy
-    render json: {message: "Photo successfully destroyed."}
+    render json: {message: "Skill successfully destroyed."}
   end
 
 end
