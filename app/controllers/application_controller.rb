@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_student
     unless current_student
-      render json: {}, status: :unauthorized
+      render json: {message: 'You need to sign in.'}, status: :unauthorized
     end
   end
 end
