@@ -1,5 +1,5 @@
 class Api::CapstonesController < ApplicationController
-  # before_action :authenticate_user, except: [:index, :show]
+  before_action :authenticate_student, except: [:index, :show]
   def index
     @capstones = Capstone.all
     render "index.json.jb"
@@ -7,7 +7,7 @@ class Api::CapstonesController < ApplicationController
 
   def create
     @capstone = Capstone.new(
-      student_id: params[:student_id],
+      student_id: params[:current_student_id],
       name: params[:name],
       description: params[:description],
       url: params[:url],
@@ -27,7 +27,6 @@ class Api::CapstonesController < ApplicationController
 
   def update
     @capstone = Capstone.find_by(id: params[:id])
-    @capstone.student_id = params[:student_id] || @capstone.student_id
     @capstone.name = params[:name] || @capstone.name
     @capstone.description = params[:description] || @capstone.description
     @capstone.url = params[:url] || @capstone.url

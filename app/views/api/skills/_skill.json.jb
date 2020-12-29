@@ -1,5 +1,5 @@
 {
-  student_id: skill.student_id,
+  current_student_id: skill.current_student_id,
   skill_name: skill.name
 }
 
