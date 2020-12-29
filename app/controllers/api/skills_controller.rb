@@ -1,7 +1,7 @@
 class Api::SkillsController < ApplicationController
   before_action :authenticate_student, except: [:index, :show]
   def index
-    @skills = Skill.all
+    @skills = Skill.where(student_id: params[:student_id])
     render "index.json.jb"
   end
 
