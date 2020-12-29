@@ -1,5 +1,5 @@
 class Api::StudentsController < ApplicationController
-  before_action :authenticate_user, except: { :create, :update, :destroy}
+  before_action :authenticate_user, except: [:create, :index, :show]
 
   def index
     @students = Student.all 
