@@ -7,5 +7,4 @@ class Student < ApplicationRecord
   has_many :capstones
   validates :email, presence: true, uniqueness: true
   validates :password_digest, presence: true
-  validates :short_bio, length: { maximum: 250 }
 end
