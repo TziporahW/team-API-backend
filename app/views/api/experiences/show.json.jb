@@ -1,0 +1,1 @@
+render partial: "experience.json.jb", locals: { experience: @experience }
