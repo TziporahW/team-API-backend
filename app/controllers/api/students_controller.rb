@@ -2,10 +2,10 @@ class Api::StudentsController < ApplicationController
   before_action :authenticate_user, except: { :create, :update, :destroy}
 
   def index
-    @students = Student.all 
+    @students = Student.all
     render json: 'index.json.jb'
   end
-  
+
   def create
     @student = Student.new(
       first_name: params[:first_name]
