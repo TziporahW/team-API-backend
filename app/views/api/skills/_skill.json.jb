@@ -1,0 +1,7 @@
+{
+  student_id: skill.student_id,
+  id: skill.id,
+  skill_name: skill.skill_name
+}
+
+
